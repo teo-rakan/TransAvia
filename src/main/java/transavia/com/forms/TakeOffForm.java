@@ -1,6 +1,5 @@
-package transavia.com.panels;
+package transavia.com.forms;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
@@ -10,7 +9,7 @@ import transavia.com.utils.DayOfWeek;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class TakeOffPanel extends BasePage {
+public class TakeOffForm extends BasePage {
 
     @FindBy (id ="data-flight-type")
     private WebElement flightTypeSelect;
@@ -28,7 +27,7 @@ public class TakeOffPanel extends BasePage {
         select.selectByValue("Single");
     }
 
-    public TakeOffPanel setSpecificMonth(Date date) {
+    public TakeOffForm setSpecificMonth(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-01");
         //String monthSelectId = specificMonthSelect.getAttribute("id");
         //By option = By.xpath(String.format(OPTIONS_PARAMETRIZED, monthSelectId, formatter.format(date)));
@@ -40,7 +39,7 @@ public class TakeOffPanel extends BasePage {
         return this;
     }
 
-    public TakeOffPanel setWeekDay(DayOfWeek weekDay) {
+    public TakeOffForm setWeekDay(DayOfWeek weekDay) {
         String dayValue = weekDay.equals(DayOfWeek.ANY) ? "" : weekDay.toString().substring(0,2).toUpperCase();
         //departureDayOfWeek.sendKeys(dayValue);
         Select select = new Select(departureDayOfWeek);

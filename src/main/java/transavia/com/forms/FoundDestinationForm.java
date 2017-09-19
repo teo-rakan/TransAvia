@@ -1,4 +1,4 @@
-package transavia.com.panels;
+package transavia.com.forms;
 
 
 import org.openqa.selenium.By;
@@ -10,7 +10,7 @@ import transavia.com.utils.Destination;
 import java.util.List;
 import java.util.Optional;
 
-public class FoundDestinationPanel extends BasePage {
+public class FoundDestinationForm extends BasePage {
 
     @FindBy(className = "AS-destinations-list_item")
     private List<WebElement> destinationPanels;

@@ -4,8 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import transavia.com.core.BasePage;
-import transavia.com.panels.FoundDestinationPanel;
-import transavia.com.panels.TakeOffPanel;
+import transavia.com.forms.FoundDestinationForm;
+import transavia.com.forms.TakeOffForm;
 import transavia.com.utils.DayOfWeek;
 import transavia.com.utils.Destination;
 
@@ -60,18 +60,18 @@ public class AdvancedSearchPage extends BasePage {
     //todo replace 'lowest' with list
     public Optional<Destination> searchDestinations() {
         searchButton.click();
-        return new FoundDestinationPanel().getDestinationsWithLowestPrice();
+        return new FoundDestinationForm().getDestinationsWithLowestPrice();
     }
 
     public AdvancedSearchPage setSingleFlight() {
         takeOffLink.click();
-        new TakeOffPanel().setSingleFlight();
+        new TakeOffForm().setSingleFlight();
         return this;
     }
 
     public AdvancedSearchPage setTakeOffInformation(boolean single, Date monthAndYear, DayOfWeek weekDay) {
         takeOffLink.click();
-        TakeOffPanel panel = new TakeOffPanel();
+        TakeOffForm panel = new TakeOffForm();
         if (single)
             panel.setSingleFlight();
         panel.setSpecificMonth(monthAndYear);

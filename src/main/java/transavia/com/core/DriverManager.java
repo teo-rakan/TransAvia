@@ -1,17 +1,33 @@
 package transavia.com.core;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import transavia.com.utils.PropertyManager;
 import transavia.com.utils.Waiter;
 
-public abstract class DriverManager {
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
+
+public class DriverManager {
 
     private static DriverManager instance;
 
     WebDriver driver;
 
-    protected abstract void createDriver();
+    public static DriverManager getInstance() {
+        if (instance == null) {
+            synchronized (DriverManager.class) {
+                if (instance == null)
+                    instance = new DriverManager();
+            }
+        }
+        return instance;
+    }
 
     WebDriver getDriver() {
         if (null == driver) {
@@ -20,14 +36,43 @@ public abstract class DriverManager {
         return driver;
     }
 
-    public static DriverManager getInstance() {
-        if (instance == null) {
-            synchronized (DriverManager.class) {
-                if (instance == null)
-                    instance = new ChromeDriverManager();
+    private void createDriver() {
+        String browserName = PropertyManager.get("browser.name");
+        String urlAddress = PropertyManager.get("url.address");
+        URL url;
+
+        try {
+            url = new URL(urlAddress);
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException("Illegal URL address: " + urlAddress, e);
+        }
+
+        driver = new RemoteWebDriver(url, getCapabilitiesFor(browserName));
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    }
+
+    private DesiredCapabilities getCapabilitiesFor(String browserName) {
+        DesiredCapabilities capabilities;
+
+        switch (browserName) {
+            case ("chrome") :
+            case ("firefox") :
+            case ("safari") :
+                capabilities = new DesiredCapabilities(browserName, "", Platform.ANY);
+                break;
+            case ("ie") :
+                capabilities = DesiredCapabilities.internetExplorer();
+                break;
+            case ("edge") :
+                capabilities = DesiredCapabilities.edge();
+                break;
+            default: {
+                throw new IllegalArgumentException("Illegal browser name: " + browserName + System.lineSeparator()
+                        + "Supported browsers: chrome, firefox, safari, ie, edge.");
             }
         }
-        return instance;
+        return capabilities;
     }
 
     public void open(String URL) {
