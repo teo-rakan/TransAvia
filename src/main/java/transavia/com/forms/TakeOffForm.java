@@ -29,7 +29,6 @@ public class TakeOffForm extends BasePage {
 
     public TakeOffForm setSpecificMonth(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-01");
-
         Select select = new Select(specificMonthSelect);
         select.selectByValue(formatter.format(date));
         return this;
@@ -37,7 +36,6 @@ public class TakeOffForm extends BasePage {
 
     public TakeOffForm setWeekDay(DayOfWeek weekDay) {
         String dayValue = weekDay.equals(DayOfWeek.ANY) ? "" : weekDay.toString().substring(0,2).toUpperCase();
-        //departureDayOfWeek.sendKeys(dayValue);
         Select select = new Select(departureDayOfWeek);
         select.selectByValue(dayValue);
         return this;

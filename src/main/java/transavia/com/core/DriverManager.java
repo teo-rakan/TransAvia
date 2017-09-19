@@ -1,14 +1,15 @@
 package transavia.com.core;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Platform;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
+import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import transavia.com.utils.PropertyManager;
 import transavia.com.utils.Waiter;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -93,6 +94,17 @@ public class DriverManager {
 
     public Waiter getWaiter() {
         return new Waiter(getDriver());
+    }
+
+    public void takeScreenshot() {
+        WebDriver augmentedDriver = new Augmenter().augment(getDriver());
+        File scrFile = ((TakesScreenshot)augmentedDriver).getScreenshotAs(OutputType.FILE);
+        String file_name = "errorScreenshots\\screenshot_" + System.currentTimeMillis() + ".jpg";
+        try {
+            FileUtils.copyFile(scrFile, new File(file_name));
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot take a screenshot");
+        }
     }
 }
 
