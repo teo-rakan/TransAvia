@@ -58,8 +58,8 @@ public class DriverManager {
 
         switch (browserName) {
             case ("chrome") :
-            case ("firefox") :
             case ("safari") :
+            case ("firefox") :
                 capabilities = new DesiredCapabilities(browserName, "", Platform.ANY);
                 break;
             case ("ie") :
