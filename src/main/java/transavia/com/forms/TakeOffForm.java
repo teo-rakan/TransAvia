@@ -29,10 +29,6 @@ public class TakeOffForm extends BasePage {
 
     public TakeOffForm setSpecificMonth(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-01");
-        //String monthSelectId = specificMonthSelect.getAttribute("id");
-        //By option = By.xpath(String.format(OPTIONS_PARAMETRIZED, monthSelectId, formatter.format(date)));
-        //specificMonthSelect.click();
-        //driverManager.find(option).click();
 
         Select select = new Select(specificMonthSelect);
         select.selectByValue(formatter.format(date));
