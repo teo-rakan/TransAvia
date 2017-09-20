@@ -20,7 +20,7 @@ public class DriverManager {
 
     private static DriverManager instance;
 
-    WebDriver driver;
+    private WebDriver driver;
 
     public static DriverManager getInstance() {
         if (instance == null) {
@@ -53,7 +53,6 @@ public class DriverManager {
         //todo drop later... used for local tests
         //System.setProperty("webdriver.chrome.driver", "D:/Software/chromedriver.exe");
         //driver = new ChromeDriver(getCapabilitiesFor(browserName));
-
 
         driver = new RemoteWebDriver(url, getCapabilitiesFor(browserName));
         driver.manage().window().maximize();
@@ -111,7 +110,7 @@ public class DriverManager {
     public void takeScreenshot() {
         WebDriver augmentedDriver = new Augmenter().augment(getDriver());
         File scrFile = ((TakesScreenshot)augmentedDriver).getScreenshotAs(OutputType.FILE);
-        String file_name = "errorScreenshots\\screenshot_" + System.currentTimeMillis() + ".jpg";
+        String file_name = "errorScreenshots/screenshot_" + System.nanoTime() + ".png";
         try {
             FileUtils.copyFile(scrFile, new File(file_name));
         } catch (IOException e) {

@@ -6,8 +6,6 @@ import org.openqa.selenium.support.FindBy;
 import transavia.com.core.BasePage;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class SearchResultPage extends BasePage {
 
@@ -30,7 +28,6 @@ public class SearchResultPage extends BasePage {
     @FindBy(className = "day-with-availability")
     private List<WebElement> availableDays;
 
-    private final String FLIGHTS_PARAMETRIZED = "//section[@class='flight %s']//div[contains(@class,' flight-result')]";
     private final String SELECTED_PARAMETRIZED = "//*[@class='flight %s']//*[contains(@class,' selected')]";
     private final String SELECTED_PRICE_PARAMETRIZED = SELECTED_PARAMETRIZED + "//*[//*[starts-with(@class,'price')]]";
 
@@ -55,23 +52,16 @@ public class SearchResultPage extends BasePage {
     }
 
     public String getTotalPrice() {
-        return extractPrice(totalPriceContainer.getText(), "\\d+\\.\\d+(?=$)");
+        return extractFrom(totalPriceContainer.getText(), "\\d+\\.\\d+(?=$)");
     }
 
     public String getErrorMessage() {
         return errorMessage.getText();
     }
 
-    private String extractPrice(String text, String pattern) {
-        Pattern orderReferencePattern = Pattern.compile(pattern);
-        Matcher matcher = orderReferencePattern.matcher(text);
-
-        return matcher.find() ? matcher.group() : null;
-    }
-
     private int getSelectedPrice(String flightType) {
         By selectedPrice = By.xpath(String.format(SELECTED_PRICE_PARAMETRIZED, flightType));
-        return Integer.valueOf(extractPrice(driverManager.find(selectedPrice).getText(), "\\d+(?= Selected)"));
+        return Integer.valueOf(extractFrom(driverManager.find(selectedPrice).getText(), "\\d+(?= Selected)"));
     }
 
     public int getInboundPrice() {

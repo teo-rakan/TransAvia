@@ -20,7 +20,7 @@ public class SimpleSearchTest extends BaseTest {
         int availableDayCount = homePage.search().getAvailableDayCount();
 
         Assert.assertEquals(departOnDay, String.valueOf(day));
-        Assert.assertEquals(availableDayCount > 0, true);
+        Assert.assertTrue(availableDayCount > 0);
     }
 
     @Test(alwaysRun = true)
