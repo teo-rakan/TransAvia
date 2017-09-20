@@ -2,6 +2,7 @@ package transavia.com;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import transavia.com.core.DriverManager;
 import transavia.com.pages.*;
 
 public class SimpleSearchTest extends BaseTest {
@@ -72,7 +73,8 @@ public class SimpleSearchTest extends BaseTest {
                 .selectFirstInbound();
 
         //todo wait for sum changes
-        Assert.assertEquals(searchResultPage.getTotalPrice(), "94.00");
+        DriverManager.getInstance().getWaiter().pause(1);
+        Assert.assertEquals(searchResultPage.getTotalPrice(), "102.00");
     }
 
 }

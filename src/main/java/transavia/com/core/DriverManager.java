@@ -2,9 +2,11 @@ package transavia.com.core;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.SystemClock;
 import transavia.com.utils.PropertyManager;
 import transavia.com.utils.Waiter;
 
@@ -12,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class DriverManager {
@@ -47,6 +50,9 @@ public class DriverManager {
         } catch (MalformedURLException e) {
             throw new IllegalArgumentException("Illegal URL address: " + urlAddress, e);
         }
+
+        //todo drop it
+        System.setProperty("webdriver.chrome.driver", "D:/Software/chromedriver.exe");
 
         driver = new RemoteWebDriver(url, getCapabilitiesFor(browserName));
         driver.manage().window().maximize();
@@ -90,6 +96,16 @@ public class DriverManager {
     public WebElement find(By locator) {
         getWaiter().untilVisible(locator);
         return getDriver().findElement(locator);
+    }
+
+
+    public List<WebElement> findAll(By locator) {
+        getWaiter().untilVisible(locator);
+        return findAllWithoutWaiting(locator);
+    }
+
+    public List<WebElement> findAllWithoutWaiting(By locator) {
+        return getDriver().findElements(locator);
     }
 
     public Waiter getWaiter() {

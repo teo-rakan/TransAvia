@@ -2,9 +2,12 @@ package transavia.com.utils;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 
+import java.time.Duration;
 import java.util.function.Function;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
@@ -35,5 +38,9 @@ public class Waiter {
 
     public void untilTextChanged(By locator, String value) {
         waitUntil(ExpectedConditions.not(ExpectedConditions.textToBe(locator, value)));
+    }
+
+    public void pause(int sec) {
+        new Actions(driver).pause(Duration.ofSeconds(sec)).perform();
     }
 }

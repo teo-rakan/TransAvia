@@ -5,19 +5,16 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import transavia.com.core.BasePage;
+import transavia.com.forms.CompactNavigationBar;
+import transavia.com.forms.NavigationBar;
+import transavia.com.forms.StandardNavigationBar;
 
 public class HomePage extends BasePage {
 
+    private NavigationBar navigationBar;
+
     @FindBy(xpath = "//*[@class='header_bar']//*[contains(@class,'primary-navigation_link') and contains(@href,'service')]")
     private WebElement serviceLink;
-
-    //todo check login link for submenu in case of min window
-    @FindBy(xpath = "//*[contains(@class,'secondary-navigation_link') and contains(@href,'account/logon')]")
-    private WebElement loginLink;
-
-    //todo check destination link for submenu in case of min window
-    @FindBy(xpath = "//*[contains(@class,'header_bar')]//*[contains(@href,'/destinations') and not(contains(@class, 'sub-navigation-level-2_link'))]")
-    private WebElement destinationLink;
 
     @FindBy(xpath = "//*[@class='HV-gs-type-e--bp0']/*[contains(@href, 'combi')]")
     private WebElement multipleDestinationsLink;
@@ -45,6 +42,10 @@ public class HomePage extends BasePage {
     //private WebElement searchButton;
 
     private final String ADD_PASSENGER_PARAMETRIZED = "//*[contains(@class, '%s')]//*[contains (@class, 'increase')]";
+    //todo login standard link shorter
+    private final By LOGIN_LINK_COMPACT_OR_STANDARD = By.xpath("//*[(contains(@class,'secondary-navigation_link') and contains(@href,'account/logon')) or " +
+            "contains(@class,'icon-font navigation--bbl__icon-account-alt')]");
+    private final By LOGIN_LINK_STANDARD = By.xpath("//*[contains(@class,'secondary-navigation_link') and contains(@href,'account/logon')]");
     private final By PASSENGERS_PANEL = By.className("passengers");
     private final By DEPARTURE_STATION_OPTIONS = By.xpath("//*[@id='routeSelection_DepartureStation-input']/following-sibling::*//li[contains(@class, 'item')]");
     private final By ARRIVAL_STATION_OPTIONS = By.xpath("//*[@id='routeSelection_ArrivalStation-input']/following-sibling::*//li[contains(@class, 'item')]");
@@ -52,7 +53,7 @@ public class HomePage extends BasePage {
     private final By ADVANCED_SEARCH_LINK = By.xpath("//*[contains(@class,'sub-navigation-level-2_link') and contains(@href,'advanced-search')]");
     private final By DATE_PICKER_CALENDAR = By.xpath("//*[contains(@class,'is-visible')]//*[@class='ui-datepicker-calendar']");
 
-    //TODO drop waits
+
     public HomePage setDestination(String from, String to) {
         fromInput.sendKeys(from);
         driverManager.find(DEPARTURE_STATION_OPTIONS).click();
@@ -89,8 +90,7 @@ public class HomePage extends BasePage {
     }
 
     public LogInPage goToLoginPage() {
-        loginLink.click();
-        return new LogInPage();
+        return getNavigationBar().goToLoginPage();
     }
 
     public MultipleSearchPage addMultipleDestinations() {
@@ -105,8 +105,7 @@ public class HomePage extends BasePage {
     }
 
     public DestinationsPage goToDestinationsPage() {
-        destinationLink.click();
-        return new DestinationsPage();
+        return getNavigationBar().goToDestinationsPage();
     }
 
     public AdvancedSearchPage goToAdvancedSearchPage() {
@@ -131,5 +130,12 @@ public class HomePage extends BasePage {
 
     public String getDepartOnDate() {
         return departOnDatePicker.getAttribute("value");
+    }
+
+    //todo drop log in
+    private NavigationBar getNavigationBar() {
+       return driverManager.findAllWithoutWaiting(By.linkText("Log in")).isEmpty()
+               ? new CompactNavigationBar()
+               : new StandardNavigationBar();
     }
 }

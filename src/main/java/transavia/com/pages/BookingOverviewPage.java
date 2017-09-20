@@ -17,7 +17,7 @@ public class BookingOverviewPage extends BasePage {
     @FindBy(xpath = "//*[text()[normalize-space() = 'Arrival']]/following-sibling::*//time")
     private WebElement arrivalTime;
 
-    @FindBy(linkText = "Booking details")
+    @FindBy(xpath = ".//*[@id='top']//*[contains(@class, 'panel_section')]//*[contains(@href, 'booking-details')]")
     private WebElement bookingDetailsLink;
 
     public String getFrom() {

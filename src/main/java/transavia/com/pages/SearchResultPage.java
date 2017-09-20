@@ -1,23 +1,21 @@
 package transavia.com.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import transavia.com.core.BasePage;
 
-import java.security.Key;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SearchResultPage extends BasePage {
 
-    @FindBy(xpath = "//*[contains(text(), 'Inbound flight')]/ancestor::*[contains(@class, 'c-flight-results-panel')]//*[contains(@class,' flight-result ')]")
-    private List<WebElement> inboundButtons;
+    @FindBy(xpath = "//*[@class='flight inbound']//*[contains(@class,' flight-result active')]")
+    private WebElement firstInboundPanel;
 
-    @FindBy(xpath = "//*[contains(text(), 'Outbound flight')]/ancestor::*[contains(@class, 'c-flight-results-panel')]//*[@class='resultsPanelWrapper']//form")
-    private List<WebElement> outboundButtons;
+    @FindBy(xpath = "//*[@class='flight outbound']//*[contains(@class,' flight-result active')]")
+    private WebElement firstOutboundPanel;
 
     @FindBy(className = "grand-total__price-container")
     private WebElement totalPriceContainer;
@@ -32,26 +30,22 @@ public class SearchResultPage extends BasePage {
     @FindBy(className = "day-with-availability")
     private List<WebElement> availableDays;
 
-    private final By TOTAL = By.className("grand-total__price-container");
-    private final String SELECTED_PRICE_PARAMETRIZED = "//*[contains(text(), '%s')]/ancestor::*[contains(@class, 'c-flight-results-panel')]//*[contains(@class, ' selected')]//*[//*[starts-with(@class,'price')]]";
+    private final String SELECTED_PARAMETRIZED = "//*[@class='flight %s']//*[contains(@class,' selected')]";
+    private final String SELECTED_PRICE_PARAMETRIZED = SELECTED_PARAMETRIZED + "//*[//*[starts-with(@class,'price')]]";
 
-
-    //todo check empty list
-    public SearchResultPage selectFirstOutbound() {
-        String oldValue = totalPriceContainer.getText();
-        WebElement first = outboundButtons.get(0);
-        first.click();
-        driverManager.getWaiter().untilTextChanged(TOTAL, oldValue);
+    private SearchResultPage selectFlight(WebElement elementForSelection, String panelName) {
+        elementForSelection.click();
+        driverManager.find(By.xpath(String.format(SELECTED_PARAMETRIZED, panelName)));
         return this;
     }
 
     //todo check empty list
+    public SearchResultPage selectFirstOutbound() {
+        return selectFlight(firstOutboundPanel, "outbound");
+    }
+
     public SearchResultPage selectFirstInbound() {
-        String oldValue = totalPriceContainer.getText();
-        WebElement first = inboundButtons.get(0);
-        first.findElement(By.xpath("./button")).sendKeys(Keys.ENTER);
-        driverManager.getWaiter().untilTextChanged(TOTAL, oldValue);
-        return this;
+        return selectFlight(firstInboundPanel, "inbound");
     }
 
     public ChooseFarePage next() {
@@ -60,32 +54,31 @@ public class SearchResultPage extends BasePage {
     }
 
     public String getTotalPrice() {
-        String val = totalPriceContainer.getText();
-        Pattern orderReferencePattern = Pattern.compile("\\d+\\.\\d+(?=$)");
-        Matcher matcher = orderReferencePattern.matcher(val);
-
-        return matcher.find() ? matcher.group() : null;
+        return extractPrice(totalPriceContainer.getText(), "\\d+\\.\\d+(?=$)");
     }
 
     public String getErrorMessage() {
         return errorMessage.getText();
     }
 
-    private Integer getPriceFromSelectedItem(String text) {
-        Pattern orderReferencePattern = Pattern.compile("\\d+(?= Selected)");
+    private String extractPrice(String text, String pattern) {
+        Pattern orderReferencePattern = Pattern.compile(pattern);
         Matcher matcher = orderReferencePattern.matcher(text);
 
-        return matcher.find() ? Integer.valueOf(matcher.group()) : null;
+        return matcher.find() ? matcher.group() : null;
+    }
+
+    private int getSelectedPrice(String flightType) {
+        By selectedPrice = By.xpath(String.format(SELECTED_PRICE_PARAMETRIZED, flightType));
+        return Integer.valueOf(extractPrice(driverManager.find(selectedPrice).getText(), "\\d+(?= Selected)"));
     }
 
     public int getInboundPrice() {
-        By selectedInboundPrice = By.xpath(String.format(SELECTED_PRICE_PARAMETRIZED, "Inbound flight"));
-        return getPriceFromSelectedItem(driverManager.find(selectedInboundPrice).getText());
+        return getSelectedPrice("inbound");
     }
 
     public int getOutboundPrice() {
-        By selectedOutboundPrice = By.xpath(String.format(SELECTED_PRICE_PARAMETRIZED, "Outbound flight"));
-        return getPriceFromSelectedItem(driverManager.find(selectedOutboundPrice).getText());
+        return getSelectedPrice("outbound");
     }
 
     public int getAvailableDayCount() {

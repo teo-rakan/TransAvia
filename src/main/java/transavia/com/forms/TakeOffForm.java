@@ -34,6 +34,7 @@ public class TakeOffForm extends BasePage {
         return this;
     }
 
+    //Available values: "", "MO", "TU", "WE", "TH" , "FR", "SA", "SU"
     public TakeOffForm setWeekDay(DayOfWeek weekDay) {
         String dayValue = weekDay.equals(DayOfWeek.ANY) ? "" : weekDay.toString().substring(0,2).toUpperCase();
         Select select = new Select(departureDayOfWeek);
