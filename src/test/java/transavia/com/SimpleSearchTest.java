@@ -2,7 +2,6 @@ package transavia.com;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import transavia.com.core.DriverManager;
 import transavia.com.pages.*;
 
 public class SimpleSearchTest extends BaseTest {
@@ -61,6 +60,7 @@ public class SimpleSearchTest extends BaseTest {
         Assert.assertEquals(actualMessage, expectedMessage);
     }
 
+    //Sometimes this test fails due to the datepickers... maybe
     @Test(alwaysRun = true)
     public void checkMultipleFlightsTotalSum() {
         SearchResultPage searchResultPage = new WelcomePage()
@@ -72,8 +72,6 @@ public class SimpleSearchTest extends BaseTest {
                 .selectFirstOutbound()
                 .selectFirstInbound();
 
-        //todo wait for sum changes
-        DriverManager.getInstance().getWaiter().pause(1);
         Assert.assertEquals(searchResultPage.getTotalPrice(), "102.00");
     }
 

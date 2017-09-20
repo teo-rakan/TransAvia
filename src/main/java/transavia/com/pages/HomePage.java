@@ -38,14 +38,10 @@ public class HomePage extends BasePage {
     private WebElement passengersInput;
 
     //todo return this button later
-    //@FindBy(xpath = "//*[@class='panel_section-button-container']")
-    //private WebElement searchButton;
+    @FindBy(xpath = "//*[@id='desktop']//button[@type='submit']")
+    private WebElement searchButton;
 
     private final String ADD_PASSENGER_PARAMETRIZED = "//*[contains(@class, '%s')]//*[contains (@class, 'increase')]";
-    //todo login standard link shorter
-    private final By LOGIN_LINK_COMPACT_OR_STANDARD = By.xpath("//*[(contains(@class,'secondary-navigation_link') and contains(@href,'account/logon')) or " +
-            "contains(@class,'icon-font navigation--bbl__icon-account-alt')]");
-    private final By LOGIN_LINK_STANDARD = By.xpath("//*[contains(@class,'secondary-navigation_link') and contains(@href,'account/logon')]");
     private final By PASSENGERS_PANEL = By.className("passengers");
     private final By DEPARTURE_STATION_OPTIONS = By.xpath("//*[@id='routeSelection_DepartureStation-input']/following-sibling::*//li[contains(@class, 'item')]");
     private final By ARRIVAL_STATION_OPTIONS = By.xpath("//*[@id='routeSelection_ArrivalStation-input']/following-sibling::*//li[contains(@class, 'item')]");
@@ -85,7 +81,8 @@ public class HomePage extends BasePage {
     }
 
     public SearchResultPage search() {
-        fromInput.sendKeys(Keys.ENTER);
+        //fromInput.sendKeys(Keys.ENTER);
+        searchButton.click();
         return new SearchResultPage();
     }
 

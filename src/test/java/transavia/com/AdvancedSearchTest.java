@@ -24,6 +24,7 @@ public class AdvancedSearchTest extends BaseTest {
         Assert.assertEquals(true, destinationsWereFound);
     }
 
+    //Sometimes this test fails due to the page reloading
     @Test(alwaysRun = true)
     public void findCheapestFlightUsingAdvancedSearch() {
         Destination destination = new WelcomePage()

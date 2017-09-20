@@ -1,11 +1,9 @@
 package transavia.com.pages;
 
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import transavia.com.core.BasePage;
 
-//TODO merge with simple search page?
 public class MultipleSearchPage extends BasePage {
 
     @FindBy(id = "openJawRouteSelection_DepartureStationOutbound-input")
@@ -26,28 +24,27 @@ public class MultipleSearchPage extends BasePage {
     @FindBy(id = "dateSelection_InboundDate-datepicker")
     private WebElement inboundDateInput;
 
-    //todo return this button later
-    //@FindBy(xpath = "//*[@id='flights']//button[@type='submit']")
-    //private WebElement searchButton;
+    @FindBy(xpath = "//*[@id='flights']//*[@class='panel_section-button-container']//button[@type='submit']")
+    private WebElement searchButton;
 
     public MultipleSearchPage setOutboundInformation(String from, String to, String date) {
         outboundFromInput.sendKeys(from);
-        outboundToInput.sendKeys(to);
         outboundDateInput.clear();
         outboundDateInput.sendKeys(date);
+        outboundToInput.sendKeys(to);
         return this;
     }
 
     public MultipleSearchPage setInboundInformation(String from, String to, String date) {
         inboundFromInput.sendKeys(from);
-        inboundToInput.sendKeys(to);
         inboundDateInput.clear();
         inboundDateInput.sendKeys(date);
+        inboundToInput.sendKeys(to);
         return this;
     }
 
     public SearchResultPage search() {
-        outboundDateInput.sendKeys(Keys.ENTER);
+        searchButton.click();
         return new SearchResultPage();
     }
 }

@@ -6,7 +6,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.SystemClock;
 import transavia.com.utils.PropertyManager;
 import transavia.com.utils.Waiter;
 
@@ -51,8 +50,10 @@ public class DriverManager {
             throw new IllegalArgumentException("Illegal URL address: " + urlAddress, e);
         }
 
-        //todo drop it
-        System.setProperty("webdriver.chrome.driver", "D:/Software/chromedriver.exe");
+        //todo drop later... used for local tests
+        //System.setProperty("webdriver.chrome.driver", "D:/Software/chromedriver.exe");
+        //driver = new ChromeDriver(getCapabilitiesFor(browserName));
+
 
         driver = new RemoteWebDriver(url, getCapabilitiesFor(browserName));
         driver.manage().window().maximize();
@@ -98,12 +99,6 @@ public class DriverManager {
         return getDriver().findElement(locator);
     }
 
-
-    public List<WebElement> findAll(By locator) {
-        getWaiter().untilVisible(locator);
-        return findAllWithoutWaiting(locator);
-    }
-
     public List<WebElement> findAllWithoutWaiting(By locator) {
         return getDriver().findElements(locator);
     }
@@ -112,6 +107,7 @@ public class DriverManager {
         return new Waiter(getDriver());
     }
 
+    //todo creates only blank screenshots
     public void takeScreenshot() {
         WebDriver augmentedDriver = new Augmenter().augment(getDriver());
         File scrFile = ((TakesScreenshot)augmentedDriver).getScreenshotAs(OutputType.FILE);

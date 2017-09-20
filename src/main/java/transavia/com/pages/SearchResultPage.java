@@ -11,10 +11,10 @@ import java.util.regex.Pattern;
 
 public class SearchResultPage extends BasePage {
 
-    @FindBy(xpath = "//*[@class='flight inbound']//*[contains(@class,' flight-result active')]")
+    @FindBy(xpath = "//section[@class='flight inbound']//div[contains(@class,' flight-result')]")
     private WebElement firstInboundPanel;
 
-    @FindBy(xpath = "//*[@class='flight outbound']//*[contains(@class,' flight-result active')]")
+    @FindBy(xpath = "//section[@class='flight outbound']//div[contains(@class,' flight-result')]")
     private WebElement firstOutboundPanel;
 
     @FindBy(className = "grand-total__price-container")
@@ -30,22 +30,23 @@ public class SearchResultPage extends BasePage {
     @FindBy(className = "day-with-availability")
     private List<WebElement> availableDays;
 
+    private final String FLIGHTS_PARAMETRIZED = "//section[@class='flight %s']//div[contains(@class,' flight-result')]";
     private final String SELECTED_PARAMETRIZED = "//*[@class='flight %s']//*[contains(@class,' selected')]";
     private final String SELECTED_PRICE_PARAMETRIZED = SELECTED_PARAMETRIZED + "//*[//*[starts-with(@class,'price')]]";
 
-    private SearchResultPage selectFlight(WebElement elementForSelection, String panelName) {
-        elementForSelection.click();
+    private SearchResultPage selectFlight(String panelName) {
         driverManager.find(By.xpath(String.format(SELECTED_PARAMETRIZED, panelName)));
         return this;
     }
 
-    //todo check empty list
     public SearchResultPage selectFirstOutbound() {
-        return selectFlight(firstOutboundPanel, "outbound");
+        firstOutboundPanel.click();
+        return selectFlight("outbound");
     }
 
     public SearchResultPage selectFirstInbound() {
-        return selectFlight(firstInboundPanel, "inbound");
+        firstInboundPanel.click();
+        return selectFlight("inbound");
     }
 
     public ChooseFarePage next() {

@@ -15,7 +15,7 @@ public class FoundDestinationForm extends BasePage {
     @FindBy(className = "AS-destinations-list_item")
     private List<WebElement> destinationPanels;
 
-    //T_T the person involved in the class name generation should be sentenced to death by hanging
+    //T_T the person involved in this class name generation should be sentenced to death by hanging
     private final By city = By.xpath("//*[@class='HV-gs-type-g--bp0']");
     private final By country = By.xpath("//*[@class='HV-gs-type-g--bp0']/following-sibling::*");
     private final By price = By.xpath("//*[@class='integer']");
