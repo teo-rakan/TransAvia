@@ -20,17 +20,17 @@ public class AdvancedSearchPage extends BasePage {
     @FindBy (id = "countryStationSelection_Destination-input")
     private WebElement toInput;
 
-    @FindBy (xpath = "//*[text()[normalize-space() = 'What is your budget per person?']]")
+    //todo replace this
+    @FindBy (xpath = "//*[@id='alternativesearch']//*[contains(@class,'AS-search-panel-budget-section ')]//*[contains(@class,'toggle-button-level-1')]")
     private WebElement personBudgetLink;
 
-    @FindBy (xpath = "//*[text()[normalize-space() = 'When will you be taking off?']]")
+    @FindBy (xpath = "//*[@id='alternativesearch']//*[contains(@class,' AS-search-panel-budget-section_next-section ')]//*[contains(@class,'toggle-button-level-1')]")
     private WebElement takeOffLink;
 
-    @FindBy (xpath = "//button[text()[normalize-space() = 'Search']]")
+    @FindBy (xpath = "//*[@id='alternativesearch']//button[@type='submit']")
     private WebElement searchButton;
 
     private final By BUDGET_INPUT = By.id("budgetSelection_EurosBudget");
-
     private final String INPUT_OPTIONS_PARAMETRIZED = "//*[@id='%s']/following-sibling::*//li";
 
     private  AdvancedSearchPage setDestination(WebElement input, String value) {

@@ -32,6 +32,7 @@ public class DriverManager {
         return instance;
     }
 
+    //todo private + create AjaxElementLocatorFactory in DriverManager?
     WebDriver getDriver() {
         if (null == driver) {
             createDriver();
@@ -64,7 +65,6 @@ public class DriverManager {
 
         switch (browserName) {
             case ("chrome") :
-            case ("safari") :
             case ("firefox") :
                 capabilities = new DesiredCapabilities(browserName, "", Platform.ANY);
                 break;
@@ -74,10 +74,9 @@ public class DriverManager {
             case ("edge") :
                 capabilities = DesiredCapabilities.edge();
                 break;
-            default: {
+            default:
                 throw new IllegalArgumentException("Illegal browser name: " + browserName + System.lineSeparator()
-                        + "Supported browsers: chrome, firefox, safari, ie, edge.");
-            }
+                        + "Supported browsers: chrome, firefox, ie, edge.");
         }
         return capabilities;
     }
@@ -114,6 +113,7 @@ public class DriverManager {
         try {
             FileUtils.copyFile(scrFile, new File(file_name));
         } catch (IOException e) {
+            //todo log or ignore?
             throw new RuntimeException("Cannot take a screenshot");
         }
     }

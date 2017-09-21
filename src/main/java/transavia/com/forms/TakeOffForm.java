@@ -20,8 +20,6 @@ public class TakeOffForm extends BasePage {
     @FindBy (id ="timeFrameSelection_ReturnFlight_DepartureDayOfTheWeek")
     private WebElement departureDayOfWeek;
 
-    private final String OPTIONS_PARAMETRIZED = "//*[@id='%s']/option[@value='%s']";
-
     public void setSingleFlight() {
         Select select = new Select(flightTypeSelect);
         select.selectByValue("Single");

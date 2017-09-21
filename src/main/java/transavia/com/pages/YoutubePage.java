@@ -13,7 +13,6 @@ public class YoutubePage extends BasePage {
     @FindBy(id = "owner-name")
     private WebElement authorName;
 
-
     YoutubePage(String URL) {
         driverManager.open(URL);
     }

@@ -18,7 +18,7 @@ public class SearchResultPage extends BasePage {
     @FindBy(className = "grand-total__price-container")
     private WebElement totalPriceContainer;
 
-    @FindBy(name = "next_button")
+    @FindBy(xpath = "//*[@id='top']//footer//button[@name='next_button']")
     private WebElement nextButton;
 
     @FindBy(xpath = "//*[contains(@class,'notification-inline notification-error')]")

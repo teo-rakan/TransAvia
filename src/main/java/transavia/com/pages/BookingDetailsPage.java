@@ -6,10 +6,10 @@ import transavia.com.core.BasePage;
 
 public class BookingDetailsPage extends BasePage {
 
-    @FindBy(xpath = "//*[@id='price-breakdown']/ancestor::*[@class='panel']//*[@class='price']")
+    @FindBy(xpath = "//*[@id='top']//*[@class='grand-total__price-container']//*[@class='front']")
     private WebElement totalPrice;
 
-    @FindBy(xpath = "//*[contains(text(),'Payment amount')]/parent::*/following-sibling::*//*[@class='amount']")
+    @FindBy(xpath = "//*[@id='top']//*[@class='details-list']//*[@class='amount']")
     private WebElement paymentAmount;
 
 

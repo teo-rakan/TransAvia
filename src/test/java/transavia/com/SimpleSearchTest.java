@@ -66,8 +66,8 @@ public class SimpleSearchTest extends BaseTest {
         SearchResultPage searchResultPage = new WelcomePage()
                 .getHomePage()
                 .addMultipleDestinations()
-                .setOutboundInformation("Bologna, Italy", "Eindhoven, Netherlands", "24-10-2017")
-                .setInboundInformation("Amsterdam (Schiphol), Netherlands", "Casablanca, Morocco", "30-10-2017")
+                .setOutboundInformation("Bologna, Italy", "Eindhoven, Netherlands", "24 Oct 2017")
+                .setInboundInformation("Amsterdam (Schiphol), Netherlands", "Casablanca, Morocco", "30 Oct 2017")
                 .search()
                 .selectFirstOutbound()
                 .selectFirstInbound();

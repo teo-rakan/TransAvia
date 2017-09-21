@@ -11,7 +11,6 @@ public class HandLuggagePage extends BasePage {
 
     public YoutubePage goToYoutubeSite() {
         String embeddedLink = videoFrame.getAttribute("src");
-
         return new YoutubePage("https://youtu.be/" + extractFrom(embeddedLink, "(?<=embed/)[A-Za-z]+"));
     }
 }
