@@ -25,7 +25,7 @@ public class SimpleSearchTest extends BaseTest {
         Assert.assertTrue(availableDayCount > 0);
     }
 
-    @Test(alwaysRun = true)
+    @Test(enabled = false)
     @JIRATestKey(key = "TEST-2")
     public void checkRoundTripTotalSumForThreePeopleWithLuggage() {
         SearchResultPage searchPage = new WelcomePage()
@@ -65,7 +65,7 @@ public class SimpleSearchTest extends BaseTest {
     }
 
     //Sometimes this test fails due to the datepickers... maybe
-    @Test(alwaysRun = true)
+    @Test(enabled = false)
     @JIRATestKey(key = "TEST-4")
     public void checkMultipleFlightsTotalSum() {
         SearchResultPage searchResultPage = new WelcomePage()
