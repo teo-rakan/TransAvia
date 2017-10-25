@@ -1,16 +1,11 @@
 package transavia.com.core;
 
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import transavia.com.utils.PropertyManager;
 import transavia.com.utils.Waiter;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -51,10 +46,6 @@ public class DriverManager {
             throw new IllegalArgumentException("Illegal URL address: " + urlAddress, e);
         }
 
-        //todo drop later... used for local tests
-        //System.setProperty("webdriver.chrome.driver", "D:/Software/chromedriver.exe");
-        //driver = new ChromeDriver(getCapabilitiesFor(browserName));
-
         driver = new RemoteWebDriver(url, getCapabilitiesFor(browserName));
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -65,12 +56,8 @@ public class DriverManager {
 
         switch (browserName) {
             case ("chrome") :
-                capabilities = DesiredCapabilities.chrome();
-                break;
             case ("firefox") :
-                System.setProperty("firefox_binary", "D:/Software/Mozilla Firefox/firefox.exe");
-                System.setProperty("webdriver.firefox.bin", "D:/Software/Mozilla Firefox/firefox.exe");
-                capabilities = DesiredCapabilities.firefox();
+                capabilities = new DesiredCapabilities(browserName, "", Platform.ANY);
                 break;
             case ("ie") :
                 capabilities = DesiredCapabilities.internetExplorer();
@@ -109,18 +96,6 @@ public class DriverManager {
         return new Waiter(getDriver());
     }
 
-    //todo creates only blank screenshots
-//    public void takeScreenshot() {
-//        WebDriver augmentedDriver = new Augmenter().augment(getDriver());
-//        File scrFile = ((TakesScreenshot)augmentedDriver).getScreenshotAs(OutputType.FILE);
-//        String file_name = "errorScreenshots/screenshot_" + System.nanoTime() + ".png";
-//        try {
-//            FileUtils.copyFile(scrFile, new File(file_name));
-//        } catch (IOException e) {
-//            //todo log or ignore?
-//            throw new RuntimeException("Cannot take a screenshot");
-//        }
-//    }
 }
 
 
