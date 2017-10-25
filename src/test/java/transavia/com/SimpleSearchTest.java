@@ -3,10 +3,12 @@ package transavia.com;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import transavia.com.pages.*;
+import transavia.com.utils.JIRATestKey;
 
 public class SimpleSearchTest extends BaseTest {
 
     @Test(alwaysRun = true)
+    @JIRATestKey(key = "TEST-1")
     public void checkSimpleSearchForOnePersonAndDirection() {
         int day = 29;
         HomePage homePage = new WelcomePage()
@@ -24,6 +26,7 @@ public class SimpleSearchTest extends BaseTest {
     }
 
     @Test(alwaysRun = true)
+    @JIRATestKey(key = "TEST-2")
     public void checkRoundTripTotalSumForThreePeopleWithLuggage() {
         SearchResultPage searchPage = new WelcomePage()
                 .getHomePage()
@@ -47,6 +50,7 @@ public class SimpleSearchTest extends BaseTest {
     }
 
     @Test(alwaysRun = true)
+    @JIRATestKey(key = "TEST-3")
     public void checkErrorMessageForUnavailableDestinations() {
         String expectedMessage = "Unfortunately we do not fly from Dubai, United Arab Emirates to Agadir, " +
                 "Morocco. However, we do fly from Dubai, United Arab Emirates to other destinations. " +
@@ -62,12 +66,13 @@ public class SimpleSearchTest extends BaseTest {
 
     //Sometimes this test fails due to the datepickers... maybe
     @Test(alwaysRun = true)
+    @JIRATestKey(key = "TEST-4")
     public void checkMultipleFlightsTotalSum() {
         SearchResultPage searchResultPage = new WelcomePage()
                 .getHomePage()
                 .addMultipleDestinations()
-                .setOutboundInformation("Bologna, Italy", "Eindhoven, Netherlands", "24 Oct 2017")
-                .setInboundInformation("Amsterdam (Schiphol), Netherlands", "Casablanca, Morocco", "30 Oct 2017")
+                .setOutboundInformation("Bologna, Italy", "Eindhoven, Netherlands", "24 Nov 2017")
+                .setInboundInformation("Amsterdam (Schiphol), Netherlands", "Casablanca, Morocco", "30 Nov 2017")
                 .search()
                 .selectFirstOutbound()
                 .selectFirstInbound();

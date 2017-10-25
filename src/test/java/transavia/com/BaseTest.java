@@ -14,12 +14,12 @@ public class BaseTest {
         DriverManager.getInstance().open("https://www.transavia.com");
     }
 
-    @AfterMethod
-    public void takeScreenShotOnFailure(ITestResult testResult) throws IOException {
-        if (testResult.getStatus() == ITestResult.FAILURE) {
-            DriverManager.getInstance().takeScreenshot();
-        }
-    }
+//    @AfterMethod
+//    public void takeScreenShotOnFailure(ITestResult testResult) throws IOException {
+//        if (testResult.getStatus() == ITestResult.FAILURE) {
+//            DriverManager.getInstance().takeScreenshot();
+//        }
+//    }
 
     @AfterMethod(alwaysRun = true)
     public void closeBrowser() {

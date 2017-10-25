@@ -6,7 +6,7 @@ import transavia.com.core.BasePage;
 
 public class DestinationsPage extends BasePage {
 
-    @FindBy(xpath = "//*[@id='top']//*[contains(@class,'button-call-to-action')]")
+    @FindBy(xpath = "//*[@id='top']//*[contains(@href,'advanced-search/search/')]")
     private WebElement perfectDestinationButton;
 
     public AdvancedSearchPage findPerfectDestination() {

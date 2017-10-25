@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import transavia.com.pages.BookingDetailsPage;
 import transavia.com.pages.BookingOverviewPage;
 import transavia.com.pages.WelcomePage;
+import transavia.com.utils.JIRATestKey;
 
 public class ViewBookingTest extends BaseTest {
 
@@ -13,6 +14,7 @@ public class ViewBookingTest extends BaseTest {
     private final String FLIGHT_DATE = "09-06-2016";  //todo as date&
 
     @Test(alwaysRun = true)
+    @JIRATestKey(key = "TEST-6")
     public void checkBookingDetails() {
         BookingOverviewPage bookingOverviewPage = new WelcomePage()
                 .getHomePage()
@@ -26,6 +28,7 @@ public class ViewBookingTest extends BaseTest {
     }
 
     @Test(alwaysRun = true)
+    @JIRATestKey(key = "TEST-7")
     public void checkBookingTotalSumAndPaymentAmount() {
         BookingDetailsPage bookingDetailsPage = new WelcomePage()
                 .getHomePage()

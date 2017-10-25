@@ -65,8 +65,12 @@ public class DriverManager {
 
         switch (browserName) {
             case ("chrome") :
+                capabilities = DesiredCapabilities.chrome();
+                break;
             case ("firefox") :
-                capabilities = new DesiredCapabilities(browserName, "", Platform.ANY);
+                System.setProperty("firefox_binary", "D:/Software/Mozilla Firefox/firefox.exe");
+                System.setProperty("webdriver.firefox.bin", "D:/Software/Mozilla Firefox/firefox.exe");
+                capabilities = DesiredCapabilities.firefox();
                 break;
             case ("ie") :
                 capabilities = DesiredCapabilities.internetExplorer();
@@ -106,17 +110,17 @@ public class DriverManager {
     }
 
     //todo creates only blank screenshots
-    public void takeScreenshot() {
-        WebDriver augmentedDriver = new Augmenter().augment(getDriver());
-        File scrFile = ((TakesScreenshot)augmentedDriver).getScreenshotAs(OutputType.FILE);
-        String file_name = "errorScreenshots/screenshot_" + System.nanoTime() + ".png";
-        try {
-            FileUtils.copyFile(scrFile, new File(file_name));
-        } catch (IOException e) {
-            //todo log or ignore?
-            throw new RuntimeException("Cannot take a screenshot");
-        }
-    }
+//    public void takeScreenshot() {
+//        WebDriver augmentedDriver = new Augmenter().augment(getDriver());
+//        File scrFile = ((TakesScreenshot)augmentedDriver).getScreenshotAs(OutputType.FILE);
+//        String file_name = "errorScreenshots/screenshot_" + System.nanoTime() + ".png";
+//        try {
+//            FileUtils.copyFile(scrFile, new File(file_name));
+//        } catch (IOException e) {
+//            //todo log or ignore?
+//            throw new RuntimeException("Cannot take a screenshot");
+//        }
+//    }
 }
 
 
